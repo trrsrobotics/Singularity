@@ -7,6 +7,10 @@
 Open Source Hobbyist / Performance Processor
 <br>
 <br>
+<br>
+# Docs
+<br>
+See <a href="github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
 Still in development so readme is mostly blank!
 <br>
 Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
