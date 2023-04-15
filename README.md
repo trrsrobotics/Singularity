@@ -7,7 +7,6 @@
 Open Source Hobbyist / Performance Processor
 <br>
 <br>
-<br>
 # Docs
 <br>
 See <a href="github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
