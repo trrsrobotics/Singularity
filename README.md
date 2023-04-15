@@ -17,7 +17,7 @@ Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
 # Roadmap
 
 * <del>Specifications draft</del> Available on the wiki!
-* Instructions definition and documentation [WIP]
+* <del>Instructions definition and documentation</del> Available on the wiki!
 * Microarchitecture Draft and Design [WIP]
 * Component Design and Testing in ISE [WIP]
 * Microarchitecture Implementation in ISE [WIP]
