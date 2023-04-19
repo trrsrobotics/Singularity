@@ -1,7 +1,7 @@
 # Asterisk
 <br>
 <br>
-![asterisk-high-resolution-logo-white-on-black-background](https://user-images.githubusercontent.com/73546596/231494043-c1bed60c-20b2-483d-aa30-1adc063dac93.png)
+[asterisk-high-resolution-logo-white-on-black-background](https://user-images.githubusercontent.com/73546596/231494043-c1bed60c-20b2-483d-aa30-1adc063dac93.png)
 <br>
 <br>
 Open Source Hobbyist / Performance Processor
