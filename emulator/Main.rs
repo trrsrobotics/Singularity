@@ -4,7 +4,7 @@ use std::env;
 use std::fs;
 use std::io;
 
-fn main() {
+fn main() -> io::Result<()> {
     let mut file_path = String::new();
     let stdin = io::stdin;
     println!("Enter file path to instructions:");
