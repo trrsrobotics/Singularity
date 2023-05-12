@@ -5,9 +5,10 @@
 <br>
 <br>
 Open Source Hobbyist / Performance Processor
-<br>
-<br>
-# Docs
+
+Checkout the first emulator!
+
+## Docs
 <br>
 See <a href="github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
 Instruction set is still in development so wiki page for it is mostly blank!
@@ -16,8 +17,8 @@ Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
 
 # Roadmap
 
-* <del>Specifications draft</del> Available on the wiki!
-* <del>Instructions definition and documentation</del> Available on the wiki!
+* <del>Specifications draft</del> Available on the wiki! Check it out! Completely Rehauled! 12|05|23|
+* <del>Instructions definition and documentation</del> Available on the wiki! Check it out! Completely Rehauled! 12|05|23|
 * Microarchitecture Draft and Design [WIP]
 * Component Design and Testing in ISE [WIP]
 * Microarchitecture Implementation in ISE [WIP]
