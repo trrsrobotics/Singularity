@@ -6,9 +6,7 @@
 <br>
 Open Source Hobbyist / Performance Processor
 
-Checkout the first emulator! (Having Issues with emulator, so not being uploaded soon!)
-
-IMPORTANT: DEVELOPMENT HALTED TILL 10th June!
+Checkout the first emulator! 
 
 ## Docs
 <br>
