@@ -1,0 +1,108 @@
+struct Emulator {
+    registers: [u32; 32],
+    pc: u32,
+    sp: u32,
+    fp: u32,
+    ccr: u32,
+    memory: Vec<u32>,
+}
+
+impl Emulator {
+    fn new() -> Self {
+        Emulator {
+            registers: [0; 32],
+            pc: 0,
+            sp: 0,
+            fp: 0,
+            ccr: 0,
+            memory: vec![0; 1024],
+        }
+    }
+
+    fn fetch(&mut self) -> u32 {
+        let instruction = u32::from_le_bytes([
+            self.memory[self.pc as usize].try_into().unwrap(),
+            self.memory[(self.pc + 1) as usize].try_into().unwrap(),
+            self.memory[(self.pc + 2) as usize].try_into().unwrap(),
+            self.memory[(self.pc + 3) as usize].try_into().unwrap(),
+        ]);
+        self.pc += 4;
+        instruction
+    }
+
+    fn decode(&self, instruction: u32) -> (u32, u32, u32, u32) {
+        let opcode = instruction >> 27;
+        let operand1 = (instruction >> 22) & 0b11111;
+        let operand2 = (instruction >> 17) & 0b11111;
+        let operand3 = (instruction >> 12) & 0b11111;
+        (opcode, operand1, operand2, operand3)
+    }
+
+    fn execute(&mut self, opcode: u32, operand1: u32, operand2: u32, operand3: u32) {
+        match opcode {
+            0 => {
+                // Load
+                let address = self.registers[operand2 as usize] + operand3;
+                self.registers[operand1 as usize] = u32::from_le_bytes([
+                    self.memory[address as usize],
+                    self.memory[(address + 1) as usize],
+                    self.memory[(address + 2) as usize],
+                    self.memory[(address + 3) as usize],
+                ]);
+            }
+            1 => {
+                // Store
+                let address = self.registers[operand2 as usize] + operand3;
+                let value = self.registers[operand1 as usize];
+                let bytes = value.to_le_bytes();
+                self.memory[address as usize] = bytes[0];
+                self.memory[(address + 1) as usize] = bytes[1];
+                self.memory[(address + 2) as usize] = bytes[2];
+                self.memory[(address + 3) as usize] = bytes[3];
+            }
+            2 => {
+                // Add
+                self.registers[operand1 as usize] =
+                    self.registers[operand2 as usize] + self.registers[operand3 as usize];
+            }
+            3 => {
+                // Subtract
+                self.registers[operand1 as usize] =
+                    self.registers[operand2 as usize] - self.registers[operand3 as usize];
+            }
+            // ... Add more instructions here
+
+            _ => {
+                // Invalid opcode
+                println!("Invalid opcode!");
+            }
+        }
+    }
+
+    fn run(&mut self) {
+        loop {
+            let instruction = self.fetch();
+            let (opcode, operand1, operand2, operand3) = self.decode(instruction);
+            self.execute(opcode, operand1, operand2, operand3);
+            if opcode == 31 {
+                // Halt
+                break;
+            }
+        }
+    }
+}
+
+fn main() {
+    let mut emulator = Emulator::new();
+    emulator.memory[0] = 0b00000000000000010000000000000000; // Load r1 from memory address 256
+    emulator.memory[1] = 0b00000001000000100000000000000000; // Store r1 to memory address r2 + 1024
+    emulator.memory[2] = 0b00010001000000110000000000000000; // Add r1 and r2, store result in r3
+    emulator.memory[3] = 0b00100001000000110000000000000000; // Subtract r1 from r2, store result in r3
+    emulator.memory[4] = 0b11111000000000000000000000000000; // Halt
+
+    emulator.run();
+
+    println!("Register 1: {}", emulator.registers[1]);
+    println!("Register 2: {}", emulator.registers[2]);
+    println!("Register 3: {}", emulator.registers[3]);
+}

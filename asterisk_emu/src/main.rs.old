@@ -1,0 +1,223 @@
+use std::{
+    cell::RefCell,
+    fmt::{Debug, Display},
+    rc::Rc,
+};
+
+#[derive(Debug)]
+struct Emulator {
+    memory: [u8; 1 << 24],
+    registers: [u32; 32],
+    program_counter: u32,
+    stack_pointer: u32,
+    frame_pointer: u32,
+    condition_code_register: u32,
+    /*video_processing_hardware: Rc<RefCell<VideoProcessingHardware>>,
+    audio_processing_hardware: Rc<RefCell<AudioProcessingHardware>>,*/
+}
+
+impl Emulator {
+    fn new() -> Self {
+        Self {
+            memory: [0; 1 << 24],
+            registers: [0; 32],
+            program_counter: 0,
+            stack_pointer: 0,
+            frame_pointer: 0,
+            condition_code_register: 0,
+            /* video_processing_hardware: Rc::new(RefCell::new(VideoProcessingHardware::new())),
+            audio_processing_hardware: Rc::new(RefCell::new(AudioProcessingHardware::new())), */
+        }
+    }
+
+    /*fn load_video_frame(&mut self, frame: &[u8]) {
+        self.video_processing_hardware
+            .borrow_mut()
+            .load_video_frame(frame);
+    }
+
+    fn draw(&mut self, image: &[u8]) {
+        self.video_processing_hardware
+            .borrow_mut()
+            .draw(image);
+    }
+
+    fn sync(&mut self) {
+        self.video_processing_hardware
+            .borrow_mut()
+            .sync();
+    }
+
+    fn load_audio_sample(&mut self, sample: &[u8]) {
+        self.audio_processing_hardware
+            .borrow_mut()
+            .load_audio_sample(sample);
+    }
+
+    fn play(&mut self) {
+        self.audio_processing_hardware
+            .borrow_mut()
+            .play();
+    }
+
+    fn pause(&mut self) {
+        self.audio_processing_hardware
+            .borrow_mut()
+            .pause();
+    }
+
+    fn stop(&mut self) {
+        self.audio_processing_hardware
+            .borrow_mut()
+            .stop();
+    } */
+
+    fn execute_instruction(&mut self) {
+        let instruction = self.memory[self.program_counter] as u16;
+        let op = instruction >> 12;
+        let operand1 = instruction >> 8 & 0x0f;
+        let operand2 = instruction & 0x0f;
+
+        match op {
+            0 => {
+                // Load
+                let value = self.memory[operand1 as usize];
+                self.registers[operand2] = value;
+            }
+            1 => {
+                // Store
+                self.memory[operand1 as usize] = self.registers[operand2];
+            }
+            2 => {
+                // Add
+                self.registers[operand2] = self.registers[operand1] + self.registers[operand2];
+            }
+            3 => {
+                // Subtract
+                self.registers[operand2] = self.registers[operand1] - self.registers[operand2];
+            }
+            4 => {
+                // Multiply
+                self.registers[operand2] = self.registers[operand1] * self.registers[operand2];
+            }
+            5 => {
+                // Divide
+                self.registers[operand2] = self.registers[operand1] / self.registers[operand2];
+            }
+            6 => {
+                // Remainder of division
+                self.registers[operand2] = self.registers[operand1] % self.registers[operand2];
+            }
+            7 => {
+                // Bitwise AND
+                self.registers[operand2] = self.registers[operand1] & self.registers[operand2];
+            }
+            8 => {
+                // Bitwise OR
+                self.registers[operand2] = self.registers[operand1] | self.registers[operand2];
+            }
+            9 => {
+                // Bitwise XOR
+                self.registers[operand2] = self.registers[operand1] ^ self.registers[operand2];
+            }
+            10 => {
+                // Bitwise NOT
+                self.registers[operand2] = !self.registers[operand1];
+            }
+            11 => {
+                // Jump
+                self.program_counter = operand1 as u32;
+            }
+            12 => {
+                // Jump if Equal
+                if self.registers[operand1] == self.registers[operand2] {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            13 => {
+                // Jump if Not Equal
+                if self.registers[operand1] != self.registers[operand2] {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            14 => {
+                // Jump if Greater Than
+                if self.registers[operand1] > self.registers[operand2] {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            15 => {
+                // Jump if Less Than
+                if self.registers[operand1] < self.registers[operand2] {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            16 => {
+                // Call
+                let old_program_counter = self.program_counter;
+                self.program_counter = operand1 as u32;
+                self.push_stack(old_program_counter);
+            }
+            17 => {
+                // Return
+                let old_program_counter = self.pop_stack();
+                self.program_counter = old_program_counter;
+            }
+            18 => {
+                // Compare
+                if self.registers[operand1] == self.registers[operand2] {
+                    self.condition_code_register = 1;
+                } else if self.registers[operand1] < self.registers[operand2] {
+                    self.condition_code_register = 2;
+                } else {
+                    self.condition_code_register = 3;
+                }
+            }
+            19 => {
+                // Branch if Not Equal
+                if self.condition_code_register != 1 {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            20 => {
+                // Branch if Equal
+                if self.condition_code_register == 1 {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            21 => {
+                // Branch if Greater Than
+                if self.condition_code_register == 2 {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            22 => {
+                // Branch if Less Than
+                if self.condition_code_register == 3 {
+                    self.program_counter = operand1 as u32;
+                }
+            }
+            23 => {
+                // No Operation
+            }
+            24 => {
+                // Halt
+                break;
+            }
+            _ => {
+                println!("Unknown instruction!");
+                break;
+            }
+        }
+    
+        fn push_stack(&mut self, value: u32) {
+            self.registers[sp] = value;
+            sp -= 1;
+        }
+    
+        fn pop_stack(&mut self) -> u32 {
+            sp += 1;
+            self.registers[sp]
+        }
+    }
+}    
