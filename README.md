@@ -11,22 +11,12 @@ Checkout the first emulator!
 ## Docs
 <br>
 See <a href="github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
-Instruction set is still in development so wiki page for it is mostly blank!
+Instruction set is still in rapid development, but wiki page is mostly documented!
 <br>
 Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
 
-New version of CommaISA released! Added more functionality, and allowed audio processing.
+New version of CommaISA released! (0.0.3-alpha). Simplified ISA, and first proper emulsotr version released
 
 # Roadmap
 
-* <del>Specifications draft</del> Available on the wiki! Check it out! Completely Rehauled! 12|05|23|
-* <del>Instructions definition and documentation</del> Available on the wiki! Check it out! Completely Rehauled! 12|05|23|
-* Microarchitecture Draft and Design [WIP]
-* Component Design and Testing in ISE [WIP]
-* Microarchitecture Implementation in ISE [WIP]
-* Test Microarchitecture [WIP]
-* Finalise Design of Microarchitecture [WIP]
-* Finalise Microarchitecture Implementation [WIP]
-* Rigorous Testing [WIP]
-* Export and test on FPGA [WIP]
-* Optimization of Design [WIP]
+Working on trello board
