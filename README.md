@@ -4,7 +4,7 @@
 <img>https://user-images.githubusercontent.com/73546596/231494043-c1bed60c-20b2-483d-aa30-1adc063dac93.png</img>
 <br>
 <br>
-Open Source Hobbyist / Performance Processor
+Open Source Hobbyist / Embedded Processor
 
 Checkout the first emulator! 
 
@@ -15,7 +15,7 @@ Instruction set is still in rapid development, but wiki page is mostly documente
 <br>
 Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
 
-New version of CommaISA released! (0.0.3-alpha). Simplified ISA, and first proper emulsotr version released
+New version of CommaISA released! (0.0.3-alpha). Simplified ISA, and first proper emulator version released
 
 # Roadmap
 
