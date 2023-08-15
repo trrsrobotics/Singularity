@@ -10,7 +10,7 @@ Checkout the first emulator!
 
 ## Docs
 <br>
-See <a href="github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
+See <a href="https://github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
 Instruction set is still in rapid development, but wiki page is mostly documented!
 <br>
 Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
