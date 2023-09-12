@@ -13,7 +13,7 @@ Checkout the first emulator!
 See <a href="https://github.com/trrsrobotics/Asterisk/wiki">Wiki</a>
 Instruction set is still in rapid development, but wiki page is mostly documented!
 <br>
-Wriiten in VHDL [Xilinx ISE VM] soon to be ported to FPGA [spartan6]
+Wriiten in SystemVerilog soon to be ported to FPGA [unknown_target]
 
 New version of CommaISA released! (0.0.3-alpha). Simplified ISA, and first proper emulator version released
 
